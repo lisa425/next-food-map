@@ -4,14 +4,14 @@ import { Dispatch, SetStateAction } from 'react';
 
 interface MarkerProps {
     map: any
-    storeDatas: any[]
+    stores: any[]
     setCurrentStore: Dispatch<SetStateAction<any>>
 }
-export default function Markers({ map, storeDatas, setCurrentStore }:MarkerProps){
+export default function Markers({ map, stores, setCurrentStore }:MarkerProps){
     const loadKakaoMarkers = useCallback(() => {
         if(map){
             //식당 데이터 마커
-            storeDatas?.map((store) => {
+            stores?.map((store) => {
                 let imageSrc = store?.bizcnd_code_nm ? `/images/markers/${store.bizcnd_code_nm}.png` : `/images/markers/default.png`,    
                     imageSize = new window.kakao.maps.Size(40, 40), 
                     imageOption = {offset: new window.kakao.maps.Point(27, 69)}; 
@@ -52,7 +52,7 @@ export default function Markers({ map, storeDatas, setCurrentStore }:MarkerProps
                 })
             })
         }
-    },[map, setCurrentStore, storeDatas]);
+    },[map, setCurrentStore, stores]);
 
     useEffect(() => {
         loadKakaoMarkers();
