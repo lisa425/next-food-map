@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 interface MarkerProps {
     map: any
-    stores: any[]
+    stores: StoreType[]
     setCurrentStore: Dispatch<SetStateAction<any>>
 }
 export default function Markers({ map, stores, setCurrentStore }:MarkerProps){
@@ -12,12 +12,12 @@ export default function Markers({ map, stores, setCurrentStore }:MarkerProps){
         if(map){
             //식당 데이터 마커
             stores?.map((store) => {
-                let imageSrc = store?.bizcnd_code_nm ? `/images/markers/${store.bizcnd_code_nm}.png` : `/images/markers/default.png`,    
+                let imageSrc = store?.category ? `/images/markers/${store.category}.png` : `/images/markers/default.png`,    
                     imageSize = new window.kakao.maps.Size(40, 40), 
                     imageOption = {offset: new window.kakao.maps.Point(27, 69)}; 
       
                 let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
-                let markerPosition = new window.kakao.maps.LatLng(store?.y_dnts, store?.x_cnts,)
+                let markerPosition = new window.kakao.maps.LatLng(store?.lat, store?.lng,)
                 let marker = new window.kakao.maps.Marker({
                     position:markerPosition, 
                     image:markerImage
@@ -25,7 +25,7 @@ export default function Markers({ map, stores, setCurrentStore }:MarkerProps){
                 
                 marker.setMap(map)
 
-                var content =  `<div class="infowindow">${store.upso_nm}</div>` //인포윈도우에 표시될 내용 
+                var content =  `<div class="infowindow">${store.name}</div>` //인포윈도우에 표시될 내용 
                 
                 var customOverlay = new window.kakao.maps.CustomOverlay({
                     position: markerPosition,
